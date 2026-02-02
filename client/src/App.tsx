@@ -156,7 +156,32 @@ function App() {
             setIsTicketModalOpen(false);
             setEditingTicket(null);
           }}
-          onSave={editingTicket ? handleUpdateTicket : handleCreateTicket}
+          onSave={async (ticketData) => {
+            if (editingTicket) {
+              // ensure id is present for update
+              await handleUpdateTicket({ ...ticketData, id: editingTicket.id });
+            } else {
+              // ensure required properties are present and of correct type
+              const { title, description, status, projectId, priority } = ticketData;
+              if (
+                typeof title === 'string' &&
+                typeof description === 'string' &&
+                typeof status === 'string' &&
+                typeof projectId === 'string' &&
+                typeof priority === 'string'
+              ) {
+                await handleCreateTicket({
+                  title,
+                  description,
+                  status,
+                  projectId,
+                  priority: priority as 'low' | 'medium' | 'high',
+                });
+              } else {
+                console.error('Missing required fields for ticket creation');
+              }
+            }
+          }}
           isEdit={!!editingTicket}
         />
       )}

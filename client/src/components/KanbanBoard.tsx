@@ -5,7 +5,7 @@ import { Column } from './Column';
 
 interface KanbanBoardProps {
   tickets: Ticket[];
-  projectId: string;
+  projectId?: string;
   onTicketsChange: () => void;
   onEditTicket: (ticket: Ticket) => void;
   onDeleteTicket: (id: string) => void;
@@ -13,7 +13,6 @@ interface KanbanBoardProps {
 
 export function KanbanBoard({
   tickets,
-  projectId,
   onTicketsChange,
   onEditTicket,
   onDeleteTicket,

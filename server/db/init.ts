@@ -10,6 +10,10 @@ export function initializeDatabase(): Promise<void> {
       if (!fs.existsSync(schemaPath)) {
         // Try parent directory if running from dist
         schemaPath = path.join(__dirname, '..', 'db', 'schema.sql');
+        if (!fs.existsSync(schemaPath)) {
+          // Try current directory structure
+          schemaPath = path.join(process.cwd(), 'server', 'db', 'schema.sql');
+        }
       }
       
       const schema = fs.readFileSync(schemaPath, 'utf-8');

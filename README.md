@@ -16,17 +16,53 @@ A modern Kanban board application for managing development tickets, built with N
 - **Backend**: Node.js + Express + TypeScript
 - **Frontend**: React + TypeScript + Vite
 - **Styling**: Tailwind CSS
-- **Drag & Drop**: react-beautiful-dnd
+- **Drag & Drop**: Native HTML5 Drag and Drop API
+- **Database**: MySQL 8.0
 
 ## Getting Started
 
-### Prerequisites
+### Option 1: Docker (Recommended)
+
+The easiest way to run the application is using Docker Compose:
+
+1. **Prerequisites:**
+   - Docker
+   - Docker Compose
+
+2. **Start the application:**
+   ```bash
+   docker-compose up -d
+   ```
+
+   This will start:
+   - MySQL database on port 3306
+   - Backend API on port 3001
+   - Frontend on port 80 (http://localhost)
+
+3. **View logs:**
+   ```bash
+   docker-compose logs -f
+   ```
+
+4. **Stop the application:**
+   ```bash
+   docker-compose down
+   ```
+
+5. **Stop and remove volumes (clean database):**
+   ```bash
+   docker-compose down -v
+   ```
+
+### Option 2: Local Development
+
+#### Prerequisites
 
 - Node.js (v18 or higher)
 - npm or yarn
 - MySQL (v5.7 or higher, or MariaDB equivalent)
 
-### Installation
+#### Installation
 
 1. Install root dependencies:
 ```bash
@@ -130,6 +166,26 @@ The application uses MySQL for persistent data storage. The database schema is a
 - **tickets**: Stores ticket information with foreign key relationship to projects
 
 The schema includes proper indexes and foreign key constraints for data integrity.
+
+## Docker Configuration
+
+The application includes Docker support with:
+- **Multi-stage builds** for optimized image sizes
+- **Docker Compose** for easy orchestration
+- **MySQL container** with automatic schema initialization
+- **Nginx** for serving the frontend in production
+- **Health checks** to ensure services start in the correct order
+
+### Docker Environment Variables
+
+When using Docker Compose, you can customize the database settings by editing `docker-compose.yml` or creating a `.env` file with:
+
+```
+MYSQL_ROOT_PASSWORD=your_root_password
+MYSQL_DATABASE=kanban_db
+MYSQL_USER=kanban_user
+MYSQL_PASSWORD=kanban_password
+```
 
 ## License
 
